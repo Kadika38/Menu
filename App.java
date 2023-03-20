@@ -1,6 +1,7 @@
 import java.util.LinkedHashMap;
 
 public class App {
+    // testing
     public static void main(String[] args) {
         Action action1 = new Action(() -> System.out.println("test action1"));
         Action action2 = new Action(() -> System.out.println("test action2"));
