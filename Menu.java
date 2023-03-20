@@ -1,14 +1,20 @@
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class Menu extends MenuObject {
     private String openingLine;
-    private HashMap<String, MenuObject> options;
+    private LinkedHashMap<String, MenuObject> options;
+    private ArrayList<String> optionStrings;
     private Scanner scanner;
 
-    Menu(String openingLine, HashMap<String, MenuObject> options) {
+    Menu(String openingLine, LinkedHashMap<String, MenuObject> options) {
         this.openingLine = openingLine;
         this.options = options;
+        optionStrings = new ArrayList<String>();
+        for (String key : this.options.keySet()) {
+            optionStrings.add(key);
+        }
         this.scanner = new Scanner(System.in);
     }
 
@@ -18,7 +24,7 @@ public class Menu extends MenuObject {
 
         // print options to choose from
         int count = 1;
-        for (String key : options.keySet()) {
+        for (String key : optionStrings) {
             System.out.println(count + ") " + key);
             count++;
         }
@@ -34,7 +40,7 @@ public class Menu extends MenuObject {
             }
             try {
                 choice = Integer.parseInt(choiceString);
-                if (choice <= 0 | choice > options.keySet().size()) {
+                if (choice <= 0 | choice > optionStrings.size()) {
                     throw new NumberFormatException();
                 }
                 keepRunning = false;
@@ -48,9 +54,10 @@ public class Menu extends MenuObject {
         // start by finding the MenuObject in options associated with the chosen option
         if (choice > 0 && choice <= options.keySet().size()) {
             count = 1;
-            for (String key : options.keySet()) {
+            for (String key : optionStrings) {
                 if (count == choice) {
                     optionChosen = options.get(key);
+                    break;
                 } else {
                     count++;
                 }
